@@ -6081,6 +6081,7 @@ const docTemplate = `{
                     }
                 },
                 "experimental": {
+                    "description": "DEPRECATED: use ExperimentalFeatures instead.",
                     "type": "boolean"
                 },
                 "experimental_features": {
