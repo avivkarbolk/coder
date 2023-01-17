@@ -67,17 +67,6 @@ type DERPConfig struct {
 	Path *DeploymentConfigField[string] `json:"path" typescript:",notnull"`
 }
 
-// type ExperimentalConfig []string
-//
-// func (c ExperimentalConfig) Enabled(entry string) bool {
-// for _, e := range c {
-// switch e {
-// case "*", "true", entry:
-// return true
-// }
-// }
-// return false
-// }
 type PrometheusConfig struct {
 	Enable  *DeploymentConfigField[bool]   `json:"enable" typescript:",notnull"`
 	Address *DeploymentConfigField[string] `json:"address" typescript:",notnull"`
