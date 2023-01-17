@@ -6,7 +6,7 @@ import (
 	"github.com/coder/coder/coderd/httpapi"
 )
 
-// @Summary Get experimental features
+// @Summary Get experiments
 // @ID get-experiments
 // @Security CoderSessionToken
 // @Produce json

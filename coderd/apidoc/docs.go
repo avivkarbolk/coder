@@ -400,7 +400,7 @@ const docTemplate = `{
                 "tags": [
                     "General"
                 ],
-                "summary": "Get experimental features",
+                "summary": "Get experiments",
                 "operationId": "get-experiments",
                 "responses": {
                     "200": {
