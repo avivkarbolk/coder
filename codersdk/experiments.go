@@ -10,7 +10,9 @@ var (
 	// ExperimentVSCodeLocal enables a workspace button to launch VSCode
 	// and connect using the local VSCode extension.
 	ExperimentVSCodeLocal = "vscode_local"
-	// ExperimentsAll includes all known experiments.
+	// ExperimentsAll should include all experiments that are safe for
+	// users to opt-in to via '*'. Experiments that are not ready for
+	// consumption by all users should not be included here.
 	ExperimentsAll = []string{
 		ExperimentVSCodeLocal,
 	}
