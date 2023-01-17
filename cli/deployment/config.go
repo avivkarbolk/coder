@@ -448,7 +448,7 @@ func newConfig() *codersdk.DeploymentConfig {
 		},
 		Experimental: &codersdk.DeploymentConfigField[[]string]{
 			Name:    "Experimental",
-			Usage:   "Enable experimental features. Experimental features are not ready for production.",
+			Usage:   "Enable one or more experiments. These are not ready for production. Separate multiple experiments with commas, or enter '*' to opt-in to all available experiments.",
 			Flag:    "experimental",
 			Default: []string{},
 		},
@@ -511,6 +511,18 @@ func Config(flagset *pflag.FlagSet, vip *viper.Viper) (*codersdk.DeploymentConfi
 			return dc, xerrors.Errorf("reading deployment config: %w", err)
 		}
 	}
+
+	// Replace the wildcard experiments with the actual values.
+	experiments := make([]string, 0)
+	for _, exp := range dc.Experimental.Value {
+		switch exp {
+		case "*", "true":
+			experiments = append(experiments, codersdk.ExperimentsAll...)
+		default:
+			experiments = append(experiments, exp)
+		}
+	}
+	dc.Experimental.Value = experiments
 
 	setConfig("", vip, &dc)
 

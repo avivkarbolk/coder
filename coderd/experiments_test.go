@@ -26,6 +26,25 @@ func Test_Experiments(t *testing.T) {
 		require.Empty(t, experiments)
 	})
 
+	t.Run("manual opt-in", func(t *testing.T) {
+		t.Parallel()
+		dc := coderdtest.DeploymentConfig(t)
+		dc.Experimental = &codersdk.DeploymentConfigField[[]string]{
+			Value: []string{"foo", "bar"},
+		}
+		client := coderdtest.New(t, &coderdtest.Options{
+			DeploymentConfig: dc,
+		})
+
+		ctx, cancel := context.WithTimeout(context.Background(), testutil.WaitLong)
+		defer cancel()
+
+		experiments, err := client.Experiments(ctx)
+		require.NoError(t, err)
+		require.NotNil(t, experiments)
+		require.ElementsMatch(t, []string{"foo", "bar"}, experiments)
+	})
+
 	t.Run("wildcard", func(t *testing.T) {
 		t.Parallel()
 		dc := coderdtest.DeploymentConfig(t)

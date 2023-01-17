@@ -249,25 +249,6 @@ func TestConfig(t *testing.T) {
 			expected := []string{"foo", "bar"}
 			require.ElementsMatch(t, expected, config.Experimental.Value)
 		},
-	}, {
-		Name: "Experimental - wildcard",
-		Env: map[string]string{
-			"CODER_EXPERIMENTAL": "*",
-		},
-		Valid: func(config *codersdk.DeploymentConfig) {
-			expected := codersdk.ExperimentsAll
-			require.ElementsMatch(t, expected, config.Experimental.Value)
-		},
-	}, {
-		Name: "Experimental - explicit opt-in to hidden experiment",
-		Env: map[string]string{
-			"CODER_EXPERIMENTAL": "foo,true",
-		},
-		Valid: func(config *codersdk.DeploymentConfig) {
-			expected := []string{"foo"}
-			expected = append(expected, codersdk.ExperimentsAll...)
-			require.ElementsMatch(t, expected, config.Experimental.Value)
-		},
 	}} {
 		tc := tc
 		t.Run(tc.Name, func(t *testing.T) {
