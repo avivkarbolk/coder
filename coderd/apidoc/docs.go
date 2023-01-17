@@ -5768,7 +5768,7 @@ const docTemplate = `{
                     "$ref": "#/definitions/codersdk.DERP"
                 },
                 "experimental": {
-                    "$ref": "#/definitions/codersdk.DeploymentConfigField-codersdk_ExperimentalConfig"
+                    "$ref": "#/definitions/codersdk.DeploymentConfigField-array_string"
                 },
                 "gitauth": {
                     "$ref": "#/definitions/codersdk.DeploymentConfigField-array_codersdk_GitAuthConfig"
@@ -5949,44 +5949,6 @@ const docTemplate = `{
                 },
                 "value": {
                     "type": "boolean"
-                }
-            }
-        },
-        "codersdk.DeploymentConfigField-codersdk_ExperimentalConfig": {
-            "type": "object",
-            "properties": {
-                "default": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "enterprise": {
-                    "type": "boolean"
-                },
-                "flag": {
-                    "type": "string"
-                },
-                "hidden": {
-                    "type": "boolean"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "secret": {
-                    "type": "boolean"
-                },
-                "shorthand": {
-                    "type": "string"
-                },
-                "usage": {
-                    "type": "string"
-                },
-                "value": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
                 }
             }
         },

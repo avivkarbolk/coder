@@ -981,7 +981,7 @@ export const MockEntitlementsWithAuditLog: TypesGen.Entitlements = {
   },
 }
 
-export const MockExperiments: TypesGen.ExperimentsResponse = [Types.Experiments.VSCodeLocal]
+export const MockExperiments: string[] = [Types.Experiments.VSCodeLocal]
 
 export const MockAuditLog: TypesGen.AuditLog = {
   id: "fbd2116a-8961-4954-87ae-e4575bd29ce0",

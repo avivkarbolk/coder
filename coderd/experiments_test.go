@@ -12,6 +12,7 @@ import (
 )
 
 func Test_Experiments(t *testing.T) {
+	t.Parallel()
 	t.Run("empty", func(t *testing.T) {
 		t.Parallel()
 		client := coderdtest.New(t, nil)
@@ -28,7 +29,7 @@ func Test_Experiments(t *testing.T) {
 	t.Run("wildcard", func(t *testing.T) {
 		t.Parallel()
 		dc := coderdtest.DeploymentConfig(t)
-		dc.Experimental = &codersdk.DeploymentConfigField[codersdk.ExperimentalConfig]{
+		dc.Experimental = &codersdk.DeploymentConfigField[[]string]{
 			Value: []string{"*"},
 		}
 		client := coderdtest.New(t, &coderdtest.Options{

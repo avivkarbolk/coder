@@ -239,7 +239,6 @@ func TestConfig(t *testing.T) {
 		},
 		Valid: func(config *codersdk.DeploymentConfig) {
 			require.Empty(t, config.Experimental.Value)
-			require.False(t, config.Experimental.Value.Enabled("foo"))
 		},
 	}, {
 		Name: "Experimental - multiple features",
@@ -247,10 +246,8 @@ func TestConfig(t *testing.T) {
 			"CODER_EXPERIMENTAL": "foo,bar",
 		},
 		Valid: func(config *codersdk.DeploymentConfig) {
-			require.ElementsMatch(t, config.Experimental.Value, []string{"foo", "bar"})
-			require.True(t, config.Experimental.Value.Enabled("foo"))
-			require.True(t, config.Experimental.Value.Enabled("bar"))
-			require.False(t, config.Experimental.Value.Enabled("baz"))
+			expected := []string{"foo", "bar"}
+			require.ElementsMatch(t, expected, config.Experimental.Value)
 		},
 	}, {
 		Name: "Experimental - wildcard",
@@ -258,21 +255,18 @@ func TestConfig(t *testing.T) {
 			"CODER_EXPERIMENTAL": "*",
 		},
 		Valid: func(config *codersdk.DeploymentConfig) {
-			require.ElementsMatch(t, config.Experimental.Value, []string{"*"})
-			require.True(t, config.Experimental.Value.Enabled("foo"))
-			require.True(t, config.Experimental.Value.Enabled("bar"))
-			require.True(t, config.Experimental.Value.Enabled("baz"))
+			expected := codersdk.ExperimentsAll
+			require.ElementsMatch(t, expected, config.Experimental.Value)
 		},
 	}, {
-		Name: "Experimental - legacy wildcard specified after other features",
+		Name: "Experimental - explicit opt-in to hidden experiment",
 		Env: map[string]string{
 			"CODER_EXPERIMENTAL": "foo,true",
 		},
 		Valid: func(config *codersdk.DeploymentConfig) {
-			require.ElementsMatch(t, config.Experimental.Value, []string{"foo", "true"})
-			require.True(t, config.Experimental.Value.Enabled("foo"))
-			require.True(t, config.Experimental.Value.Enabled("bar"))
-			require.True(t, config.Experimental.Value.Enabled("baz"))
+			expected := []string{"foo"}
+			expected = append(expected, codersdk.ExperimentsAll...)
+			require.ElementsMatch(t, expected, config.Experimental.Value)
 		},
 	}} {
 		tc := tc

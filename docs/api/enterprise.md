@@ -113,7 +113,6 @@ curl -X GET http://coder-server:8080/api/v2/entitlements \
 {
   "errors": ["string"],
   "experimental": true,
-  "experimental_features": ["string"],
   "features": {
     "property1": {
       "actual": 0,

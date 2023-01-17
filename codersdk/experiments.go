@@ -16,18 +16,15 @@ var (
 	}
 )
 
-// ExperimentalConfig is the set of experiments that are enabled.
-type ExperimentsResponse []string
-
-func (c *Client) Experiments(ctx context.Context) (ExperimentsResponse, error) {
+func (c *Client) Experiments(ctx context.Context) ([]string, error) {
 	res, err := c.Request(ctx, http.MethodGet, "/api/v2/experiments", nil)
 	if err != nil {
-		return ExperimentsResponse{}, err
+		return []string{}, err
 	}
 	defer res.Body.Close()
 	if res.StatusCode != http.StatusOK {
-		return ExperimentsResponse{}, readBodyAsError(res)
+		return []string{}, readBodyAsError(res)
 	}
-	var exp ExperimentsResponse
+	var exp []string
 	return exp, json.NewDecoder(res.Body).Decode(&exp)
 }

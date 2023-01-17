@@ -446,11 +446,11 @@ func newConfig() *codersdk.DeploymentConfig {
 				Default:     512,
 			},
 		},
-		Experimental: &codersdk.DeploymentConfigField[codersdk.ExperimentalConfig]{
+		Experimental: &codersdk.DeploymentConfigField[[]string]{
 			Name:    "Experimental",
 			Usage:   "Enable experimental features. Experimental features are not ready for production.",
 			Flag:    "experimental",
-			Default: codersdk.ExperimentalConfig([]string{}),
+			Default: []string{},
 		},
 		UpdateCheck: &codersdk.DeploymentConfigField[bool]{
 			Name:    "Update Check",
@@ -552,7 +552,7 @@ func setConfig(prefix string, vip *viper.Viper, target interface{}) {
 		case time.Duration:
 			vip.MustBindEnv(prefix, env)
 			val.FieldByName("Value").SetInt(int64(vip.GetDuration(prefix)))
-		case []string, codersdk.ExperimentalConfig:
+		case []string:
 			vip.MustBindEnv(prefix, env)
 			// As of October 21st, 2022 we supported delimiting a string
 			// with a comma, but Viper only supports with a space. This
@@ -744,7 +744,7 @@ func setFlags(prefix string, flagset *pflag.FlagSet, vip *viper.Viper, target in
 			_ = flagset.IntP(flg, shorthand, vip.GetInt(prefix), usage)
 		case time.Duration:
 			_ = flagset.DurationP(flg, shorthand, vip.GetDuration(prefix), usage)
-		case []string, codersdk.ExperimentalConfig:
+		case []string:
 			_ = flagset.StringSliceP(flg, shorthand, vip.GetStringSlice(prefix), usage)
 		case []codersdk.GitAuthConfig:
 			// Ignore this one!
